@@ -1,12 +1,12 @@
 import bcrypt from "bcrypt";
 
-import { IUser } from "../models/user";
+import { IUser } from "../models/User";
 import { appConfig } from "../config/appConfig";
 import UserDto, { IUserModel } from "../dtos/UserDto";
 import {
   UnableToSaveUserError,
   InvalidUsernameOrPasswordError,
-} from "../utils/LibraryErrors";
+} from "../utils/libraryErrors";
 
 export async function register(user: IUser): Promise<IUserModel> {
   const ROUNDS = appConfig.rounds;

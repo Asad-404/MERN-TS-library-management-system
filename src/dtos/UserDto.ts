@@ -1,9 +1,9 @@
 import mongoose, { Schema, Document } from "mongoose";
-import { IUser } from "../models/user";
+import { IUser } from "../models/User";
 
 export interface IUserModel extends IUser, Document {}
 
-const UserSchema = new Schema(
+const userSchema = new Schema(
   {
     type: {
       type: String,
@@ -33,7 +33,7 @@ const UserSchema = new Schema(
   }
 );
 
-UserSchema.methods.toJSON = function () {
+userSchema.methods.toJSON = function () {
   const user = this.toObject();
   delete user.password;
   user.id = user._id;
@@ -44,4 +44,4 @@ UserSchema.methods.toJSON = function () {
   return user;
 };
 
-export default mongoose.model<IUserModel>("User", UserSchema);
+export default mongoose.model<IUserModel>("User", userSchema);

@@ -1,9 +1,9 @@
 import { Request, Response } from "express";
 
-import { IUser } from "../models/user";
+import { IUser } from "../models/User";
 import { IUserModel } from "../dtos/UserDto";
-import { login, register } from "../services/UserService";
-import { InvalidUsernameOrPasswordError } from "../utils/LibraryErrors";
+import { login, register } from "../services/userService";
+import { InvalidUsernameOrPasswordError } from "../utils/libraryErrors";
 
 async function handleRegister(req: Request, res: Response) {
   const user: IUser = req.body;

@@ -1,7 +1,7 @@
 import Joi, { ObjectSchema } from "joi";
 import { NextFunction, Response, Request } from "express";
 
-import { IUser } from "../models/user";
+import { IUser } from "../models/User";
 
 export function validateSchema(schema: ObjectSchema) {
   return async (req: Request, res: Response, next: NextFunction) => {
