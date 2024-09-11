@@ -3,6 +3,7 @@ import express from "express";
 import { dbConfig } from "./config/dbConfig";
 import errorHandler from "./middlewares/errorHandler";
 import mongoose from "mongoose";
+import { registerRoutes } from "./routes";
 
 const app = express();
 
@@ -24,6 +25,7 @@ mongoose.connection.on("disconnected", () => {
 });
 
 // Define your routes here
+registerRoutes(app);
 
 // Use the error handler middleware
 app.use(errorHandler);
