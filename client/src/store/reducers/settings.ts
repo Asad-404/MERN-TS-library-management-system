@@ -7,7 +7,7 @@ interface SettingState {
 }
 
 const initialState: SettingState = {
-  displayLoginModal: true,
+  displayLoginModal: false,
   displayLibraryCard: false,
   displayLoan: false,
 };

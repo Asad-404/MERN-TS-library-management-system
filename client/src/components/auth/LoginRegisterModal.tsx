@@ -1,14 +1,13 @@
-import { useDispatch, useSelector } from "react-redux";
 import Modal from "../common/Modal";
-import { AppDispatch, RootState } from "../../store";
 import { useEffect, useState } from "react";
 import { setDisplayLoginModal } from "../../store/reducers/settings";
 import LoginForm from "./loginRegisterModal/LoginForm";
 import RegisterForm from "./loginRegisterModal/RegisterForm";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
 
 export default function LoginRegisterModal() {
-  const authState = useSelector((state: RootState) => state.auth);
-  const dispatch: AppDispatch = useDispatch();
+  const authState = useAppSelector((state) => state.auth);
+  const dispatch = useAppDispatch();
 
   const [isLogin, setIsLogin] = useState<boolean>(true);
   const closeModal = () => {

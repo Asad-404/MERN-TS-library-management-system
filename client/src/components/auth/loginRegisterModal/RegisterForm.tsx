@@ -1,18 +1,17 @@
-import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "../../../store";
 import { MouseEvent, useEffect, useRef } from "react";
 import {
   registerUser,
   resetRegisterSuccess,
 } from "../../../store/reducers/auth";
+import { useAppDispatch, useAppSelector } from "../../../store/hooks";
 
 interface RegisterFormProps {
   toggleLogin: () => void;
 }
 
 export default function RegisterForm({ toggleLogin }: RegisterFormProps) {
-  const authState = useSelector((state: RootState) => state.auth);
-  const dispatch: AppDispatch = useDispatch();
+  const authState = useAppSelector((state) => state.auth);
+  const dispatch = useAppDispatch();
 
   const firstRef = useRef<HTMLInputElement>(null);
   const lastRef = useRef<HTMLInputElement>(null);

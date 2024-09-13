@@ -1,18 +1,17 @@
 import { useRef, MouseEvent } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "../../../store";
 import { loginUser } from "../../../store/reducers/auth";
+import { useAppDispatch, useAppSelector } from "../../../store/hooks";
 
 interface LoginFormProps {
   toggleRegister: () => void;
 }
 
 export default function LoginForm({ toggleRegister }: LoginFormProps) {
+  const auth = useAppSelector((state) => state.auth);
+  const dispatch = useAppDispatch();
+
   const emailRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
-
-  const auth = useSelector((state: RootState) => state.auth);
-  const dispatch: AppDispatch = useDispatch();
 
   const handleLogin = async (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
