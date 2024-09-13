@@ -6,6 +6,7 @@ import UserDto, { IUserModel } from "../dtos/UserDto";
 import {
   UnableToSaveUserError,
   InvalidUsernameOrPasswordError,
+  UserDoesNotExistError,
 } from "../utils/libraryErrors";
 
 export async function register(user: IUser): Promise<IUserModel> {
@@ -42,6 +43,53 @@ export async function login(credentials: {
       }
     }
   } catch (error: any) {
+    throw error;
+  }
+}
+
+export async function findAllUsers(): Promise<IUserModel[]> {
+  try {
+    const users = await UserDto.find();
+    return users;
+  } catch (error) {
+    return [];
+  }
+}
+
+export async function findUserById(userId: string): Promise<IUserModel> {
+  try {
+    const user = await UserDto.findById(userId);
+    if (user) return user;
+    throw new UserDoesNotExistError("User does not exist with this ID");
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function modifyUser(user: IUserModel): Promise<IUserModel> {
+  try {
+    const id = await UserDto.findByIdAndUpdate(user.id, user, {
+      new: true,
+    });
+
+    if (!id) {
+      throw new UserDoesNotExistError("User does not exist with this ID");
+    }
+
+    return user;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function removeUser(userId: string): Promise<string> {
+  try {
+    let deleted = await UserDto.findByIdAndDelete(userId);
+    if (!deleted) {
+      throw new UserDoesNotExistError("User does not exist with this ID");
+    }
+    return "User deleted successfully";
+  } catch (error) {
     throw error;
   }
 }

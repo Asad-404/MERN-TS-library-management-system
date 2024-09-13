@@ -6,13 +6,13 @@ const router = express.Router();
 
 router.post(
   "/register",
-  validateSchema(Schemas.user.create),
+  validateSchema(Schemas.user.create, "body"),
   AuthController.handleRegister
 );
 
 router.post(
   "/login",
-  validateSchema(Schemas.user.login),
+  validateSchema(Schemas.user.login, "body"),
   AuthController.handleLogin
 );
 
