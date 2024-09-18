@@ -1,15 +1,22 @@
 import { useEffect } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
-import HomePage from "./pages/HomePage";
+import HomePage from "./pages/Home";
 import Layout from "./components/Layout";
-import { useAppSelector } from "./store/hooks";
+import { useAppDispatch, useAppSelector } from "./store/hooks";
+import { fetchUser } from "./store/reducers/auth";
+import ProfilePage from "./pages/Profile";
 
 export default function App() {
+  const dispatch = useAppDispatch();
   const loggedInUser = useAppSelector((state) => state.auth.loggedInUser);
 
   useEffect(() => {
-    console.log("loggedInUser", loggedInUser);
+    const userId = localStorage.getItem("userId");
+
+    if (userId && !loggedInUser) {
+      dispatch(fetchUser({ userId, property: "loggedInUser" }));
+    }
   }, [loggedInUser]);
 
   return (
@@ -19,7 +26,7 @@ export default function App() {
           <Route path="" element={<HomePage />} />
           <Route path="/catalog" element={<>Catalog</>} />
           <Route path="/resource/:barcode" element={<>Resource</>} />
-          <Route path="/profile/:userId" element={<>User Profile</>} />
+          <Route path="/profile/:userId" element={<ProfilePage />} />
         </Route>
       </Routes>
     </BrowserRouter>

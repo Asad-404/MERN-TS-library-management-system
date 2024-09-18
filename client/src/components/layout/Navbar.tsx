@@ -76,9 +76,9 @@ export default function Navbar() {
         {authState.loggedInUser ? (
           <div
             onClick={navigateToProfile}
-            className="h-full w-fit p-3 text-text_primary rounded-xl cursor-pointer mr-4 hover:bg-bg_primary hover:text-text_secondary"
+            className="h-full w-fit p-2 text-white rounded-xl cursor-pointer ml-4 hover:bg-bg_primary hover:text-secondary"
           >
-            <h2>{authState.loggedInUser.firstName}'s Account</h2>
+            <p>{authState.loggedInUser.firstName}'s Account</p>
           </div>
         ) : (
           <div

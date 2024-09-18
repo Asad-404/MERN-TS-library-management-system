@@ -1,9 +1,15 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { LoginUserPayload, RegisterUserPayload, User } from "../../models/User";
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import {
+  FetchUserPayload,
+  LoginUserPayload,
+  RegisterUserPayload,
+  User,
+} from "../../models/User";
 import axios from "axios";
 
 interface AuthState {
   loggedInUser: User | undefined;
+  profileUser: User | undefined;
   loading: boolean;
   error: boolean;
   registerSuccess: boolean;
@@ -11,6 +17,7 @@ interface AuthState {
 
 const initialState: AuthState = {
   loggedInUser: undefined,
+  profileUser: undefined,
   loading: false,
   error: false,
   registerSuccess: false,
@@ -40,6 +47,36 @@ export const registerUser = createAsyncThunk(
   }
 );
 
+export const fetchUser = createAsyncThunk(
+  "auth/fetch",
+  async (payload: FetchUserPayload, thunkAPI) => {
+    try {
+      const req = await axios.get(
+        `http://localhost:3000/users/${payload.userId}`
+      );
+      const user = req.data.data;
+      return {
+        user,
+        property: payload.property,
+      };
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
+export const updateUser = createAsyncThunk(
+  "auth/update",
+  async (payload: User, thunkAPI) => {
+    try {
+      const req = await axios.put("http://localhost:3000/users", payload);
+      return req.data.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
 export const AuthSlice = createSlice({
   name: "auth",
   initialState,
@@ -48,6 +85,13 @@ export const AuthSlice = createSlice({
       state = {
         ...state,
         registerSuccess: false,
+      };
+      return state;
+    },
+    resetUser: (state, action: PayloadAction<string>) => {
+      state = {
+        ...state,
+        [action.payload]: undefined,
       };
       return state;
     },
@@ -64,6 +108,24 @@ export const AuthSlice = createSlice({
     });
 
     builder.addCase(registerUser.pending, (state) => {
+      state = {
+        ...state,
+        error: false,
+        loading: true,
+      };
+      return state;
+    });
+
+    builder.addCase(fetchUser.pending, (state) => {
+      state = {
+        ...state,
+        error: false,
+        loading: true,
+      };
+      return state;
+    });
+
+    builder.addCase(updateUser.pending, (state) => {
       state = {
         ...state,
         error: false,
@@ -91,6 +153,25 @@ export const AuthSlice = createSlice({
       return state;
     });
 
+    builder.addCase(fetchUser.fulfilled, (state, action) => {
+      state = {
+        ...state,
+        [action.payload.property]: action.payload.user,
+        loading: false,
+      };
+      return state;
+    });
+
+    builder.addCase(updateUser.fulfilled, (state, action) => {
+      state = {
+        ...state,
+        profileUser: action.payload,
+        loggedInUser: action.payload,
+        loading: false,
+      };
+      return state;
+    });
+
     // Rejected logic
     builder.addCase(loginUser.rejected, (state) => {
       state = {
@@ -109,9 +190,27 @@ export const AuthSlice = createSlice({
       };
       return state;
     });
+
+    builder.addCase(fetchUser.rejected, (state) => {
+      state = {
+        ...state,
+        error: true,
+        loading: false,
+      };
+      return state;
+    });
+
+    builder.addCase(updateUser.rejected, (state) => {
+      state = {
+        ...state,
+        error: true,
+        loading: false,
+      };
+      return state;
+    });
   },
 });
 
-export const { resetRegisterSuccess } = AuthSlice.actions;
+export const { resetRegisterSuccess, resetUser } = AuthSlice.actions;
 
 export default AuthSlice.reducer;
