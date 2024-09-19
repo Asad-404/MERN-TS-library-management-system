@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 
 import { IUser } from "../models/User";
-import { IUserModel } from "../dtos/UserDto";
+import { IUserModel } from "../daos/UserDao";
 import { login, register } from "../services/userService";
 import { InvalidUsernameOrPasswordError } from "../utils/libraryErrors";
 

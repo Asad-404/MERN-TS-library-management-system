@@ -2,7 +2,7 @@ import bcrypt from "bcrypt";
 
 import { IUser } from "../models/User";
 import { appConfig } from "../config/appConfig";
-import UserDto, { IUserModel } from "../dtos/UserDto";
+import UserDao, { IUserModel } from "../daos/UserDao";
 import {
   UnableToSaveUserError,
   InvalidUsernameOrPasswordError,
@@ -13,7 +13,7 @@ export async function register(user: IUser): Promise<IUserModel> {
   const ROUNDS = appConfig.rounds;
   try {
     const hashedPass = await bcrypt.hash(user.password, ROUNDS);
-    const newUser = new UserDto({ ...user, password: hashedPass });
+    const newUser = new UserDao({ ...user, password: hashedPass });
     return await newUser.save();
   } catch (error: any) {
     throw new UnableToSaveUserError(error.message);
@@ -26,7 +26,7 @@ export async function login(credentials: {
 }): Promise<IUserModel> {
   const { email, password } = credentials;
   try {
-    const user = await UserDto.findOne({ email });
+    const user = await UserDao.findOne({ email });
     if (!user) {
       throw new InvalidUsernameOrPasswordError("Invalid username or password");
     } else {
@@ -49,7 +49,7 @@ export async function login(credentials: {
 
 export async function findAllUsers(): Promise<IUserModel[]> {
   try {
-    const users = await UserDto.find();
+    const users = await UserDao.find();
     return users;
   } catch (error) {
     return [];
@@ -58,7 +58,7 @@ export async function findAllUsers(): Promise<IUserModel[]> {
 
 export async function findUserById(userId: string): Promise<IUserModel> {
   try {
-    const user = await UserDto.findById(userId);
+    const user = await UserDao.findById(userId);
     if (user) return user;
     throw new UserDoesNotExistError("User does not exist with this ID");
   } catch (error) {
@@ -68,7 +68,7 @@ export async function findUserById(userId: string): Promise<IUserModel> {
 
 export async function modifyUser(user: IUserModel): Promise<IUserModel> {
   try {
-    const id = await UserDto.findByIdAndUpdate(user.id, user, {
+    const id = await UserDao.findByIdAndUpdate(user.id, user, {
       new: true,
     });
 
@@ -84,7 +84,7 @@ export async function modifyUser(user: IUserModel): Promise<IUserModel> {
 
 export async function removeUser(userId: string): Promise<string> {
   try {
-    let deleted = await UserDto.findByIdAndDelete(userId);
+    let deleted = await UserDao.findByIdAndDelete(userId);
     if (!deleted) {
       throw new UserDoesNotExistError("User does not exist with this ID");
     }
