@@ -19,7 +19,7 @@ export default function CatalogOverviewSection({
   };
   return (
     <div className="w-full h-[500px]">
-      <div className="h-[10%] flex justify-between items-end px-3">
+      <div className="h-[10%] flex justify-between items-end md:px-3">
         <h4>{label}</h4>
         <p
           className="hover:underline hover:cursor-pointer"

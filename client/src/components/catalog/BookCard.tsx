@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
-import { Book } from "../../../../../models/Book";
-import { mapAuthorsToString } from "../../../../../utils/bookUtils";
+import { Book } from "../../models/Book";
+import { mapAuthorsToString } from "../../utils/bookUtils";
 
 interface BookCardProps {
   book: Book;
@@ -13,7 +13,7 @@ export default function BookCard({ book }: BookCardProps) {
   };
   return (
     <div
-      className="book-card h-[400px] w-[300px] bg-bg_secondary rounded-xl p-2 flex flex-col justify-center items-center shadow-custom mx-2 cursor-pointer"
+      className="book-card h-[400px] w-[300px] bg-bg_secondary rounded-xl p-2 flex flex-col justify-center items-center shadow-custom cursor-pointer"
       onClick={displayBook}
     >
       <img
@@ -21,8 +21,8 @@ export default function BookCard({ book }: BookCardProps) {
         src={book.cover}
         alt="book cover"
       />
-      <div className="book-card-info h-1/2 w-full m-0">
-        <h1 className="book-card-title w-full whitespace-nowrap overflow-hidden text-ellipsis text-xl">
+      <div className="book-card-info h-1/2 w-full m-0 overflow-hidden">
+        <h1 className="book-card-title w-full whitespace-nowrap overflow-hidden text-ellipsis text-3xl">
           {book.title}
         </h1>
         <h3 className="book-card-author w-full whitespace-nowrap overflow-hidden text-ellipsis text-xl">

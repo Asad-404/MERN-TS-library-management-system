@@ -1,4 +1,5 @@
 import { Book } from "../models/Book";
+import { Pagination } from "../models/Pagination";
 
 export const generateRandomGenres = () => {
   const choices = [
@@ -38,4 +39,64 @@ export const getRandomBookByGenre = (genre: string, books: Book[]): Book[] => {
   }
 
   return randomBooks;
+};
+
+export const calculatePagination = (pagination: Pagination): string[] => {
+  const pArr: string[] = [];
+
+  if (pagination) {
+    const total = pagination?.totalPages;
+    const current = pagination?.currentPage;
+
+    if (total <= 10) {
+      for (let i = 1; i <= total; i++) {
+        pArr.push(`${i}`);
+      }
+    } else if (total > 10 && current - 7 <= 0) {
+      for (let i = 1; i <= 8; i++) {
+        pArr.push(`${i}`);
+      }
+
+      pArr.push("...");
+
+      for (let i = total - 1; i <= total; i++) {
+        pArr.push(`${i}`);
+      }
+    } else if (total > 10 && total - 7 > 0 && total - current > 5) {
+      for (let i = 1; i <= 2; i++) {
+        pArr.push(`${i}`);
+      }
+
+      pArr.push("...");
+
+      for (let i = current; i <= current + 4; i++) {
+        pArr.push(`${i}`);
+      }
+      pArr.push("...");
+
+      for (let i = total - 1; i <= total; i++) {
+        pArr.push(`${i}`);
+      }
+    } else {
+      // for (let i = 1; i <= 2; i++) {
+      //   pArr.push(`${i}`);
+      //   pArr.push(`...`);
+      //   for (let i = total - 5; i <= total; i++) {
+      //     pArr.push(`${i}`);
+      //   }
+      // }
+
+      for (let i = 1; i <= 2; i++) {
+        pArr.push(`${i}`);
+      }
+
+      pArr.push(`...`);
+
+      for (let i = total - 5; i <= total; i++) {
+        pArr.push(`${i}`);
+      }
+    }
+  }
+
+  return pArr;
 };

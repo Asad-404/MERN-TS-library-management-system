@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import {
   findAllBooks,
   modifyBook,
+  queryBooks,
   registerBook,
   removeBook,
 } from "../services/bookService";
@@ -81,4 +82,36 @@ async function deleteBook(req: Request, res: Response) {
   }
 }
 
-export default { getAllBooks, createBook, updateBook, deleteBook };
+async function searchForBookByQuery(req: Request, res: Response) {
+  const {
+    title,
+    barcode,
+    author,
+    description,
+    subject,
+    genre,
+    page = 1,
+    limit = 25,
+  } = req.query;
+
+  const result = await queryBooks(
+    Number(page),
+    Number(limit),
+    title as string,
+    barcode as string,
+    description as string,
+    subject as string,
+    author as string,
+    genre as string
+  );
+
+  res.status(200).json({ message: "Retrieved books from query", data: result });
+}
+
+export default {
+  getAllBooks,
+  createBook,
+  updateBook,
+  deleteBook,
+  searchForBookByQuery,
+};

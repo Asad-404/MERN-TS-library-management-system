@@ -17,7 +17,7 @@ export default function CatalogOverview() {
     dispatch(fetchAllBooks());
   }, []);
   return (
-    <>
+    <div className="p-4">
       {bookState.books.length > 0 && !bookState.loading ? (
         <div className="catalog-overview w-full h-fit">
           <h2>
@@ -38,6 +38,6 @@ export default function CatalogOverview() {
       ) : (
         <></>
       )}
-    </>
+    </div>
   );
 }

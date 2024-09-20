@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Book } from "../../../../models/Book";
-import BookCard from "./bookCarousel/BookCard";
+import BookCard from "../../BookCard";
 
 interface BookCarouselProps {
   books: Book[];
@@ -23,9 +23,9 @@ export default function BookCarousel({ books }: BookCarouselProps) {
     setOrder(reordered);
   };
   return (
-    <div className="w-full h-[425px] bg-bg_secondary shadow-custom flex justify-center items-center p-4 overflow-hidden flex-wrap gap-4 relative">
+    <div className="w-full h-[425px] bg-bg_secondary shadow-custom flex justify-center items-center py-4 overflow-hidden flex-wrap gap-4 relative">
       <div
-        className="h-10 w-10 absolute top-1/2 left-2.5 flex justify-center items-center select-none text-2xl hover:cursor-pointer hover:bg-[rgba(122,121,120,0.3)] hover:rounded-full"
+        className="h-10 w-10 absolute top-1/2 left-0 md:left-2.5 flex justify-center items-center select-none text-2xl hover:cursor-pointer hover:bg-[rgba(122,121,120,0.3)] hover:rounded-full"
         onClick={moveLeft}
       >
         {"<"}
@@ -34,7 +34,7 @@ export default function BookCarousel({ books }: BookCarouselProps) {
         <BookCard book={item} key={item.barcode} />
       ))}
       <div
-        className="h-10 w-10 absolute top-1/2 right-2.5 flex justify-center items-center select-none text-2xl hover:cursor-pointer hover:bg-[rgba(122,121,120,0.3)] hover:rounded-full"
+        className="h-10 w-10 absolute top-1/2 right-0 md:right-2.5 flex justify-center items-center select-none text-2xl hover:cursor-pointer hover:bg-[rgba(122,121,120,0.3)] hover:rounded-full"
         onClick={moveRight}
       >
         {">"}

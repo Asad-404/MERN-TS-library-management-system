@@ -20,5 +20,6 @@ router.delete(
   validateSchema(Schemas.book.delete, "params"),
   bookController.deleteBook
 );
+router.get("/query", bookController.searchForBookByQuery);
 
 export default router;
