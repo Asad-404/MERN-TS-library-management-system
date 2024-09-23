@@ -10,6 +10,7 @@ import axios from "axios";
 interface AuthState {
   loggedInUser: User | undefined;
   profileUser: User | undefined;
+  libraryCard: string;
   loading: boolean;
   error: boolean;
   registerSuccess: boolean;
@@ -18,6 +19,7 @@ interface AuthState {
 const initialState: AuthState = {
   loggedInUser: undefined,
   profileUser: undefined,
+  libraryCard: "",
   loading: false,
   error: false,
   registerSuccess: false,
@@ -70,6 +72,20 @@ export const updateUser = createAsyncThunk(
   async (payload: User, thunkAPI) => {
     try {
       const req = await axios.put("http://localhost:3000/users", payload);
+      return req.data.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
+export const getLibraryCard = createAsyncThunk(
+  "auth/library-card",
+  async (userId: string, thunkAPI) => {
+    try {
+      const req = await axios.post("http://localhost:3000/card", {
+        user: userId,
+      });
       return req.data.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -134,6 +150,15 @@ export const AuthSlice = createSlice({
       return state;
     });
 
+    builder.addCase(getLibraryCard.pending, (state) => {
+      state = {
+        ...state,
+        error: false,
+        loading: true,
+      };
+      return state;
+    });
+
     // Resolved logic
     builder.addCase(loginUser.fulfilled, (state, action) => {
       state = {
@@ -168,6 +193,17 @@ export const AuthSlice = createSlice({
         profileUser: action.payload,
         loggedInUser: action.payload,
         loading: false,
+      };
+      return state;
+    });
+
+    builder.addCase(getLibraryCard.fulfilled, (state, action) => {
+      console.log("getLibraryCard fulfilled payload", action.payload);
+
+      state = {
+        ...state,
+        loading: false,
+        libraryCard: action.payload.id,
       };
       return state;
     });

@@ -82,7 +82,7 @@ async function deleteBook(req: Request, res: Response) {
   }
 }
 
-async function searchForBookByQuery(req: Request, res: Response) {
+async function searchForBooksByQuery(req: Request, res: Response) {
   const {
     title,
     barcode,
@@ -100,8 +100,8 @@ async function searchForBookByQuery(req: Request, res: Response) {
     title as string,
     barcode as string,
     description as string,
-    subject as string,
     author as string,
+    subject as string,
     genre as string
   );
 
@@ -113,5 +113,5 @@ export default {
   createBook,
   updateBook,
   deleteBook,
-  searchForBookByQuery,
+  searchForBooksByQuery,
 };

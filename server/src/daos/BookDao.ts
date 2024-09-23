@@ -55,6 +55,7 @@ const BookSchema = new Schema(
 
 BookSchema.methods.toJSON = function () {
   const book = this.toObject();
+  book.id = book._id;
   delete book._id;
   delete book.createdAt;
   delete book.updatedAt;
