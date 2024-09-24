@@ -1,5 +1,6 @@
 import mongoose, { Document, Schema } from "mongoose";
 import { IBook } from "../models/Book";
+import { LoanSchema } from "./LoanDao";
 
 export interface IBookModel extends IBook, Document {}
 const BookSchema = new Schema(
@@ -46,6 +47,7 @@ const BookSchema = new Schema(
       type: String,
       required: true,
     },
+    records: [LoanSchema],
   },
   {
     versionKey: false,
