@@ -24,9 +24,6 @@ LoanSchema.methods.toJSON = function () {
   const loan = this.toObject();
   loan.id = loan._id;
   delete loan._id;
-  delete loan.createdAt;
-  delete loan.updatedAt;
-
   return loan;
 };
 

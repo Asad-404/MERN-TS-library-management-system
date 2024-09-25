@@ -4,6 +4,7 @@ import LoginRegisterModal from "./auth/LoginRegisterModal";
 import Navbar from "./layout/Navbar";
 import Footer from "./layout/Footer";
 import LibraryCardModal from "./libraryCard/LibraryCardModal";
+import LoanBookModal from "./catalog/LoanBookModal";
 
 export default function Layout() {
   const setting = useAppSelector((state) => state.setting);
@@ -11,6 +12,7 @@ export default function Layout() {
     <div className="w-full h-fit relative">
       {setting.displayLoginModal && <LoginRegisterModal />}
       {setting.displayLibraryCard && <LibraryCardModal />}
+      {setting.displayLoan && <LoanBookModal />}
       <Navbar />
       <Outlet />
       <Footer />

@@ -10,3 +10,15 @@ export const mapAuthorsToString = (book: Book) => {
 
   return authors.slice(0, authors.length - 2);
 };
+
+/*
+
+export function determineLoanModalContent(book:Book){
+  if(book.records.length === 0 || book.records[0].status === 'AVAILABLE'){
+    return <BookCheckout />
+  }
+  
+  return <BookCheckIn />
+}
+
+*/

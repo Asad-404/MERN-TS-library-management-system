@@ -1,3 +1,6 @@
+import { Loan } from "./Loan";
+import { User } from "./User";
+
 export type Book = {
   id: string;
   barcode: string;
@@ -10,5 +13,16 @@ export type Book = {
   publisher: string;
   pages: number;
   genre: string;
-  records: [];
+  records: Loan[];
+};
+
+export type CheckoutBookPayload = {
+  book: Book;
+  libraryCard: string;
+  employee: User;
+};
+
+export type CheckInBookPayload = {
+  book: Book;
+  employee: User;
 };
