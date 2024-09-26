@@ -16,7 +16,7 @@ export default function CatalogSearch() {
   }, [location.search]);
 
   return (
-    <div className="w-full h-fit flex flex-col justify-center items-center p-4">
+    <div className="w-full h-fit flex flex-col justify-center items-center">
       <div className="w-[98.75%] h-fit flex flex-col justify-center items-center mb-4">
         <CatalogAdvancedSearch />
       </div>

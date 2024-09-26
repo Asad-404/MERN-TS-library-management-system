@@ -11,13 +11,13 @@ export default function CatalogOverview() {
   const dispatch = useAppDispatch();
   const bookState = useAppSelector((state) => state.book);
 
-  const [genres, setGenres] = useState<string[]>(generateRandomGenres);
+  const [genres] = useState<string[]>(generateRandomGenres);
 
   useEffect(() => {
     dispatch(fetchAllBooks());
   }, []);
   return (
-    <div className="p-4">
+    <>
       {bookState.books.length > 0 && !bookState.loading ? (
         <div className="catalog-overview w-full h-fit">
           <h2>
@@ -38,6 +38,6 @@ export default function CatalogOverview() {
       ) : (
         <></>
       )}
-    </div>
+    </>
   );
 }

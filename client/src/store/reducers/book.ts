@@ -102,6 +102,24 @@ export const checkInBook = createAsyncThunk(
   }
 );
 
+export const loadBookByBarcode = createAsyncThunk(
+  "book/id",
+  async (payload: string, thunkAPI) => {
+    try {
+      const res = await axios.get(
+        `http://localhost:3000/book/query?barcode=${payload}`
+      );
+      const book = res.data.data.items[0];
+      if (!book || book.barcode !== payload) {
+        throw new Error();
+      }
+      return book;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
 export const BookSlice = createSlice({
   name: "book",
   initialState,
@@ -145,6 +163,14 @@ export const BookSlice = createSlice({
     });
 
     builder.addCase(checkInBook.pending, (state) => {
+      state = {
+        ...state,
+        loading: true,
+      };
+      return state;
+    });
+
+    builder.addCase(loadBookByBarcode.pending, (state) => {
       state = {
         ...state,
         loading: true,
@@ -208,6 +234,25 @@ export const BookSlice = createSlice({
         ...state,
         books: bookList,
         loading: false,
+      };
+      return state;
+    });
+
+    builder.addCase(loadBookByBarcode.fulfilled, (state, action) => {
+      state = {
+        ...state,
+        loading: false,
+        currentBook: action.payload,
+      };
+      return state;
+    });
+
+    //rejected logic
+    builder.addCase(loadBookByBarcode.rejected, (state) => {
+      state = {
+        ...state,
+        loading: false,
+        error: true,
       };
       return state;
     });

@@ -22,11 +22,11 @@ export default function ProfilePage() {
     }
   }, [userId]);
   return (
-    <div className="container mx-auto p-4 md:p-8">
+    <div className="container mx-auto py-2 md:py-4 px-2 md:px-0">
       <h1>
         {profileUser?.firstName} {profileUser?.lastName}'s Profile
       </h1>
-      <div className="h-fit w-full flex flex-col md:flex-row gap-3 md:justify-between pt-5">
+      <div className="h-fit w-full flex flex-col md:flex-row gap-2 md:gap-4 md:justify-between pt-4">
         <div className="w-full md:w-[40%] h-full bg-bg_secondary rounded-xl shadow-custom p-4 flex flex-col items-center">
           <UpdateUserForm />
         </div>

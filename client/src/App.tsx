@@ -7,6 +7,7 @@ import { useAppDispatch, useAppSelector } from "./store/hooks";
 import { fetchUser } from "./store/reducers/auth";
 import ProfilePage from "./pages/Profile";
 import CatalogPage from "./pages/Catalog";
+import Resource from "./pages/Resource";
 
 export default function App() {
   const dispatch = useAppDispatch();
@@ -26,7 +27,7 @@ export default function App() {
         <Route path="/" element={<Layout />}>
           <Route path="" element={<HomePage />} />
           <Route path="/catalog" element={<CatalogPage />} />
-          <Route path="/resource/:barcode" element={<>Resource</>} />
+          <Route path="/resource/:barcode" element={<Resource />} />
           <Route path="/profile/:userId" element={<ProfilePage />} />
         </Route>
       </Routes>

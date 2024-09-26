@@ -43,51 +43,53 @@ export default function Navbar() {
     dispatch(setDisplayLoginModal(true));
   };
   return (
-    <nav className="w-full h-full bg-secondary text-text_primary flex items-center justify-between p-2 md:p-8">
-      <div>
-        <Link to="/" className="w-full h-fit flex items-center justify-start">
-          <MdBook size="1.75rem" className="text-white" />
-          <p className="hidden text-white font-semibold text-2xl md:block">
-            My Library
-          </p>
-        </Link>
-      </div>
-      <div className="w-fit md:w-[75%] h-fit flex justify-end items-center">
-        <Link
-          to="/catalog"
-          className="h-full w-fit text-white font-semibold rounded-xl cursor-pointer p-2 mr-4 hover:bg-bg_primary hover:text-secondary no-underline"
-        >
-          <p>Catalog</p>
-        </Link>
-        <div className="flex justify-center items-center border-2 border-solid border-white rounded-3xl px-2 py-1">
-          <input
-            className="w-full bg-transparent border-none font-normal text-white placeholder:text-white opacity-100 focus:outline-none"
-            placeholder="Search Catalog"
-            onKeyDown={handleEnterKey}
-            ref={searchRef}
-            type="text"
-          />
-          <MdSearch
-            size="1.5rem"
-            onClick={handleSearchIconClick}
-            className="cursor-pointer text-white"
-          />
+    <nav className="w-full h-full bg-secondary text-text_primary p-2 md:p-8">
+      <div className="container mx-auto flex items-center justify-between">
+        <div>
+          <Link to="/" className="w-full h-fit flex items-center justify-start">
+            <MdBook size="1.75rem" className="text-white" />
+            <p className="hidden text-white font-semibold text-2xl md:block">
+              My Library
+            </p>
+          </Link>
         </div>
-        {authState.loggedInUser ? (
-          <div
-            onClick={navigateToProfile}
-            className="h-full w-fit p-2 text-white rounded-xl cursor-pointer ml-4 hover:bg-bg_primary hover:text-secondary"
+        <div className="w-fit md:w-[75%] h-fit flex justify-end items-center">
+          <Link
+            to="/catalog"
+            className="h-full w-fit text-white font-semibold rounded-xl cursor-pointer p-2 mr-4 hover:bg-bg_primary hover:text-secondary no-underline"
           >
-            <p>{authState.loggedInUser.firstName}'s Account</p>
+            <p>Catalog</p>
+          </Link>
+          <div className="flex justify-center items-center border-2 border-solid border-white rounded-3xl px-2 py-1">
+            <input
+              className="w-full bg-transparent border-none font-normal text-white placeholder:text-white opacity-100 focus:outline-none"
+              placeholder="Search Catalog"
+              onKeyDown={handleEnterKey}
+              ref={searchRef}
+              type="text"
+            />
+            <MdSearch
+              size="1.5rem"
+              onClick={handleSearchIconClick}
+              className="cursor-pointer text-white"
+            />
           </div>
-        ) : (
-          <div
-            className="h-full w-fit p-2 text-white rounded-xl cursor-pointer ml-4 hover:bg-bg_primary hover:text-secondary"
-            onClick={toggleLogin}
-          >
-            <p>Login</p>
-          </div>
-        )}
+          {authState.loggedInUser ? (
+            <div
+              onClick={navigateToProfile}
+              className="h-full w-fit p-2 text-white rounded-xl cursor-pointer ml-4 hover:bg-bg_primary hover:text-secondary"
+            >
+              <p>{authState.loggedInUser.firstName}'s Account</p>
+            </div>
+          ) : (
+            <div
+              className="h-full w-fit p-2 text-white rounded-xl cursor-pointer ml-4 hover:bg-bg_primary hover:text-secondary"
+              onClick={toggleLogin}
+            >
+              <p>Login</p>
+            </div>
+          )}
+        </div>
       </div>
     </nav>
   );

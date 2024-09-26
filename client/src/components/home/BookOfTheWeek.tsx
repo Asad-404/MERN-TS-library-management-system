@@ -1,4 +1,4 @@
-import BookInfo from "./bookOfTheWeek/BookInfo";
+import BookInfo from "../common/BookInfo";
 
 export default function BookOfTheWeek() {
   return (
