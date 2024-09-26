@@ -3,6 +3,7 @@ import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { useEffect } from "react";
 import { fetchUser } from "../store/reducers/auth";
 import UpdateUserForm from "../components/profile/UpdateUserForm";
+import ProfileLoanHistory from "../components/profile/ProfileLoanHistory";
 
 export default function ProfilePage() {
   const { userId } = useParams();
@@ -31,7 +32,7 @@ export default function ProfilePage() {
           <UpdateUserForm />
         </div>
         <div className="w-full md:w-[59%] min-h-[64vh] overflow-hidden bg-bg_secondary rounded-xl shadow-custom p-4">
-          HELLO
+          {profileUser && <ProfileLoanHistory />}
         </div>
       </div>
     </div>

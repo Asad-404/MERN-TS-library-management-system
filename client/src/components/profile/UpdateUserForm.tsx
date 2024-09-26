@@ -12,7 +12,7 @@ export default function UpdateUserForm() {
   const userState = useAppSelector((state) => state.auth);
 
   const [displayUpdate, setDisplayUpdate] = useState<boolean>(false);
-  const [user, setUser] = useState<User | undefined>(userState.profileUser);
+  const [user, setUser] = useState<User | undefined>();
 
   const updateUserState = (e: ChangeEvent<HTMLInputElement>) => {
     if (user) {
@@ -41,10 +41,10 @@ export default function UpdateUserForm() {
   };
 
   useEffect(() => {
-    if (!user) {
-      setUser(userState.profileUser);
+    if (userState.profileUser) {
+      setUser(JSON.parse(JSON.stringify(userState.profileUser)));
     }
-  }, [userState.profileUser, user]);
+  }, [userState.profileUser?.id]);
 
   return (
     <form className="w-full h-full flex flex-col justify-center items-center">
